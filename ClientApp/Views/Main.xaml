@@ -1,0 +1,315 @@
+﻿<controls:MetroWindow x:Class="ClientApp.Views.Main"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:local="clr-namespace:ClientApp"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:myControls="clr-namespace:ClientApp.MyControls"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:converters="clr-namespace:ClientApp.Helpers.Converters"
+                      mc:Ignorable="d" Background="#f7f7f7"
+                      Title="Bank" BorderBrush="{DynamicResource AccentColorBrush}" Height="600" Width="800"
+                      ShowIconOnTitleBar="True" BorderThickness="2" WindowStartupLocation="CenterScreen"
+                      Icon="/ClientApp;component/icon.ico" MinWidth="600" MinHeight="520">
+    <Window.Resources>
+        <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter" />
+        <converters:OperationAmountConverter x:Key="OperationAmountConverter" />
+        <converters:ColorOperationConverter x:Key="ColorOperationConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Padding="5" FontWeight="Bold" FontSize="14" Grid.Row="0" HorizontalContentAlignment="Center"
+               Content="{Binding RemainingTimeSession}" HorizontalAlignment="Right" Background="#D8000C"
+               Foreground="#FFF" />
+        <TabControl Grid.Row="1">
+            <TabItem DataContext="{Binding AccountsTabViewModel}" Header="Accounts"
+                     IsSelected="{Binding IsSelectedTab}">
+                <Grid>
+                    <DataGrid RowStyle="{x:Null}" EnableColumnVirtualization="True" EnableRowVirtualization="True"
+                              RowBackground="Transparent" Background="Transparent" ItemsSource="{Binding Accounts}"
+                              Margin="0,20,0,0"
+                              AutoGenerateColumns="False" Visibility="{Binding VisibilityForm}" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Number" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Number}"
+                                                 Margin="20,5"
+                                                 HorizontalContentAlignment="Center">
+                                            <TextBox.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Command="Copy" Header="Copy">
+                                                        <MenuItem.Icon>
+                                                            <iconPacks:PackIconFontAwesome Kind="Clone" Padding="2"
+                                                                                           Foreground="#949494"
+                                                                                           VerticalContentAlignment="Stretch"
+                                                                                           HorizontalContentAlignment="Stretch" />
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </TextBox.ContextMenu>
+                                        </TextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Balance" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Balance}" Margin="20,5" ContentStringFormat="{}{0:N2}"
+                                               FontWeight="Bold" HorizontalContentAlignment="Center" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                <Setter Property="Padding" Value="15" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="14" />
+                                <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                            </Style>
+                        </DataGrid.Resources>
+                    </DataGrid>
+                    <myControls:MyProgressBar Visibility="{Binding VisibilityProgress}" VerticalAlignment="Center" />
+                    <myControls:MyErrorControl ErrorValue="{Binding Error}" VerticalAlignment="Center"
+                                               Visibility="{Binding Path=Error, TargetNullValue=Collapsed}" />
+                </Grid>
+            </TabItem>
+            <TabItem DataContext="{Binding TransferTabViewModel}" Header="Transfer"
+                     IsSelected="{Binding IsSelectedTab}">
+                <Grid>
+                    <Grid Visibility="{Binding VisibilityForm}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Account from" HorizontalContentAlignment="Right" Foreground="#949494"
+                               FontWeight="Bold" Margin="10" />
+                        <myControls:MyAccountComboBox Grid.Row="0" Grid.Column="1" />
+                        <Label Grid.Row="1" Grid.Column="0" FontWeight="Bold" Foreground="#949494"
+                               HorizontalContentAlignment="Right" Content="Account to" Margin="10" />
+                        <TextBox Grid.Row="1" Text="{Binding AccountTo}" Grid.Column="1" Width="300" Margin="10" />
+                        <Label Grid.Row="2" Grid.Column="0" FontWeight="Bold" Foreground="#949494"
+                               HorizontalContentAlignment="Right" Content="Amount" Margin="10" />
+                        <TextBox Grid.Row="2" Text="{Binding Amount}" Grid.Column="1" Width="300" Margin="10" />
+                        <Label Grid.Row="3" Grid.Column="0" FontWeight="Bold" Foreground="#949494"
+                               HorizontalContentAlignment="Right" Content="Title" Margin="10" />
+                        <TextBox Grid.Row="3" Text="{Binding Title}" Grid.Column="1" Width="300" Margin="10" />
+                        <Button Content="Confirm" Margin="10" Height="35" Style="{StaticResource MyButtonStyle}"
+                                Grid.Row="4" Grid.Column="1" Command="{Binding ConfrimCommand}" />
+                    </Grid>
+                    <myControls:MyProgressBar Visibility="{Binding VisibilityProgress}" VerticalAlignment="Center" />
+                    <myControls:MyErrorControl ErrorValue="{Binding Error}" VerticalAlignment="Top"
+                                               Visibility="{Binding Path=Error, TargetNullValue=Collapsed}" />
+                    <myControls:MySuccessControl SuccessValue="{Binding Success}" VerticalAlignment="Center"
+                                                 Visibility="{Binding Path=Success, TargetNullValue=Collapsed}" />
+                </Grid>
+            </TabItem>
+            <TabItem DataContext="{Binding PayInTabViewModel}" Header="PayIn" IsSelected="{Binding IsSelectedTab}">
+                <Grid>
+                    <Grid Visibility="{Binding VisibilityForm}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Account to" HorizontalContentAlignment="Right" Foreground="#949494"
+                               FontWeight="Bold" Margin="10" />
+                        <myControls:MyAccountComboBox Grid.Row="0" Grid.Column="1" />
+                        <Label Grid.Row="1" Grid.Column="0" FontWeight="Bold" Foreground="#949494"
+                               HorizontalContentAlignment="Right" Content="Amount" Margin="10" />
+                        <TextBox Grid.Row="1" Text="{Binding Amount}" Grid.Column="1" Width="300" Margin="10" />
+                        <Button Content="Confirm" Margin="10" Height="35" Style="{StaticResource MyButtonStyle}"
+                                Grid.Row="2" Grid.Column="1" Command="{Binding ConfrimCommand}" />
+                    </Grid>
+                    <myControls:MyProgressBar Visibility="{Binding VisibilityProgress}" VerticalAlignment="Center" />
+                    <myControls:MyErrorControl ErrorValue="{Binding Error}" VerticalAlignment="Top"
+                                               Visibility="{Binding Path=Error, TargetNullValue=Collapsed}" />
+                    <myControls:MySuccessControl SuccessValue="{Binding Success}" VerticalAlignment="Center"
+                                                 Visibility="{Binding Path=Success, TargetNullValue=Collapsed}" />
+                </Grid>
+            </TabItem>
+            <TabItem DataContext="{Binding PayOutTabViewModel}" Header="PayOut" IsSelected="{Binding IsSelectedTab}">
+                <Grid>
+                    <Grid Visibility="{Binding VisibilityForm}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Account from" HorizontalContentAlignment="Right" Foreground="#949494"
+                               FontWeight="Bold" Margin="10" />
+                        <myControls:MyAccountComboBox Grid.Row="0" Grid.Column="1" />
+                        <Label Grid.Row="1" Grid.Column="0" FontWeight="Bold" Foreground="#949494"
+                               HorizontalContentAlignment="Right" Content="Amount" Margin="10" />
+                        <TextBox Grid.Row="1" Text="{Binding Amount}" Grid.Column="1" Width="300" Margin="10" />
+                        <Button Content="Confirm" Margin="10" Height="35" Style="{StaticResource MyButtonStyle}"
+                                Grid.Row="2" Grid.Column="1" Command="{Binding ConfrimCommand}" />
+                    </Grid>
+                    <myControls:MyProgressBar Visibility="{Binding VisibilityProgress}" VerticalAlignment="Center" />
+                    <myControls:MyErrorControl ErrorValue="{Binding Error}" VerticalAlignment="Top"
+                                               Visibility="{Binding Path=Error, TargetNullValue=Collapsed}" />
+                    <myControls:MySuccessControl SuccessValue="{Binding Success}" VerticalAlignment="Center"
+                                                 Visibility="{Binding Path=Success, TargetNullValue=Collapsed}" />
+                </Grid>
+            </TabItem>
+            <TabItem DataContext="{Binding HistoryTabViewModel}" Header="History" IsSelected="{Binding IsSelectedTab}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Padding="0" Margin="10" Height="35" Style="{StaticResource MyButtonStyle}" Grid.Row="0"
+                            Grid.Column="0" Command="{Binding ChangePageCommand}" CommandParameter="-1"
+                            IsEnabled="{Binding IsEnabledPreviousButton}">
+                        <Grid>
+                            <iconPacks:PackIconFontAwesome
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Kind="ChevronLeft" />
+                        </Grid>
+                    </Button>
+                    <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                        <Label.Content>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} z {1}">
+                                        <Binding Path="CurrentPage" />
+                                        <Binding Path="CountAllOfPages" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Label.Content>
+                    </Label>
+                    <Button Margin="10" Height="35" Style="{StaticResource MyButtonStyle}" Grid.Row="0"
+                            Grid.Column="2"
+                            Command="{Binding ChangePageCommand}" CommandParameter="1"
+                            IsEnabled="{Binding IsEnabledNextButton}">
+                        <Grid>
+                            <iconPacks:PackIconFontAwesome
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Kind="ChevronRight" />
+                        </Grid>
+                    </Button>
+                    <Label Grid.Row="0" Grid.Column="3" Content="Account:" HorizontalContentAlignment="Right"
+                           Foreground="#949494" FontWeight="Bold" Margin="10" VerticalAlignment="Center" />
+                    <myControls:MyAccountComboBox Grid.Row="0" Width="300" Grid.Column="4" />
+
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6">
+                        <DataGrid RowStyle="{x:Null}" Visibility="{Binding VisibilityForm}"
+                                  EnableColumnVirtualization="True" EnableRowVirtualization="True"
+                                  RowBackground="Transparent" Background="Transparent" CanUserReorderColumns="False"
+                                  IsReadOnly="True"
+                                  ItemsSource="{Binding HistoryOfAccount.Operations}" Margin="0,20,0,0"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Amount" Width="SizeToCells" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label
+                                                Content="{Binding Amount,Converter={StaticResource OperationAmountConverter}}"
+                                                Margin="20,5"
+                                                MinWidth="100"
+                                                Foreground="{Binding Amount,Converter={StaticResource ColorOperationConverter}}"
+                                                FontWeight="Bold" HorizontalContentAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Balance" Width="SizeToCells" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Balance}" Margin="20,5"
+                                                   ContentStringFormat="{}{0:N2}" MinWidth="100"
+                                                   FontWeight="Bold" HorizontalContentAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Date" Width="SizeToCells" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Date}" Margin="20,5"
+                                                   HorizontalContentAlignment="Center" MinWidth="150" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Details" Width="SizeToCells" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <Label BorderThickness="0" MinWidth="200" Content="{Binding Details}"
+                                                       Margin="20,5,20,0" Padding="0"
+                                                       HorizontalContentAlignment="Center" />
+                                                <TextBox HorizontalContentAlignment="Center" BorderThickness="0"
+                                                         Background="Transparent" TextWrapping="Wrap" MinWidth="200"
+                                                         MaxWidth="400" Padding="0" Text="{Binding Title}"
+                                                         Visibility="{Binding Title, Converter={StaticResource NullToCollapsedConverter}}"
+                                                         Margin="20,0,20,5" FontSize="12" Foreground="#515151"
+                                                         HorizontalAlignment="Stretch" IsReadOnly="True" />
+                                            </StackPanel>
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                    <Setter Property="Padding" Value="15" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                                </Style>
+                            </DataGrid.Resources>
+                        </DataGrid>
+                        <myControls:MyProgressBar Visibility="{Binding VisibilityProgress}" VerticalAlignment="Center" />
+                        <myControls:MyErrorControl ErrorValue="{Binding Error}" VerticalAlignment="Top"
+                                                   Visibility="{Binding Path=Error, TargetNullValue=Collapsed}" />
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</controls:MetroWindow>

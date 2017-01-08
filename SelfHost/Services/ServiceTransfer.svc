@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SelfHost.Services.Interfaces.IServiceTransfer, SelfHost" CodeBehind="ServiceTransfer.svc.cs" Factory="Autofac.Integration.Wcf.AutofacServiceHostFactory, Autofac.Integration.Wcf" %>

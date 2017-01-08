@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="ClientApp.MyControls.MySuccessControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClientApp.MyControls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" x:Name="SuccessControl">
+    <StackPanel Background="#DFF2BF" Margin="10">
+        <iconPacks:PackIconFontAwesome Width="25" Margin="10,10,10,0"
+                                       Height="25"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Kind="Check" Foreground="#4F8A10" />
+        <ScrollViewer MaxHeight="100" HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBlock Text="{Binding Path=SuccessValue, ElementName=SuccessControl}" Padding="10" Foreground="#4F8A10"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center" TextWrapping="Wrap" />
+        </ScrollViewer>
+    </StackPanel>
+</UserControl>

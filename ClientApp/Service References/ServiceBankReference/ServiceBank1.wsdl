@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+                  xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/"
+                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServiceBank" targetNamespace="http://tempuri.org/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://127.0.0.1:8080/serviceBank?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://127.0.0.1:8080/serviceBank?xsd=xsd1"
+                  namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://127.0.0.1:8080/serviceBank?xsd=xsd2"
+                  namespace="http://schemas.datacontract.org/2004/07/BusinessLogic.Model" />
+      <xsd:import schemaLocation="http://127.0.0.1:8080/serviceBank?xsd=xsd3"
+                  namespace="http://schemas.datacontract.org/2004/07/BusinessLogic.Exceptions" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServiceBank_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_GetAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccounts" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_GetAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_GetAccounts_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/BusinessLogic.Exceptions" name="detail"
+               element="q1:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_PayIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:PayIn" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_PayIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PayInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_PayIn_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/BusinessLogic.Exceptions" name="detail"
+               element="q2:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_PayOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:PayOut" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_PayOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PayOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_PayOut_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/BusinessLogic.Exceptions" name="detail"
+               element="q3:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_Transfer_InputMessage">
+    <wsdl:part name="parameters" element="tns:Transfer" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_Transfer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_Transfer_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/BusinessLogic.Exceptions" name="detail"
+               element="q4:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_GetHistoryOfAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHistoryOfAccount" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_GetHistoryOfAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHistoryOfAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBank_GetHistoryOfAccount_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/BusinessLogic.Exceptions" name="detail"
+               element="q5:TokenFault" />
+  </wsdl:message>
+  <wsdl:portType name="IServiceBank">
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBank/Login" message="tns:IServiceBank_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBank/LoginResponse"
+                   message="tns:IServiceBank_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBank/GetAccounts"
+                  message="tns:IServiceBank_GetAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBank/GetAccountsResponse"
+                   message="tns:IServiceBank_GetAccounts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceBank/GetAccountsTokenFaultFault" name="TokenFaultFault"
+                  message="tns:IServiceBank_GetAccounts_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PayIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBank/PayIn" message="tns:IServiceBank_PayIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBank/PayInResponse"
+                   message="tns:IServiceBank_PayIn_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceBank/PayInTokenFaultFault" name="TokenFaultFault"
+                  message="tns:IServiceBank_PayIn_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PayOut">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBank/PayOut" message="tns:IServiceBank_PayOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBank/PayOutResponse"
+                   message="tns:IServiceBank_PayOut_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceBank/PayOutTokenFaultFault" name="TokenFaultFault"
+                  message="tns:IServiceBank_PayOut_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Transfer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBank/Transfer"
+                  message="tns:IServiceBank_Transfer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBank/TransferResponse"
+                   message="tns:IServiceBank_Transfer_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceBank/TransferTokenFaultFault" name="TokenFaultFault"
+                  message="tns:IServiceBank_Transfer_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHistoryOfAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBank/GetHistoryOfAccount"
+                  message="tns:IServiceBank_GetHistoryOfAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBank/GetHistoryOfAccountResponse"
+                   message="tns:IServiceBank_GetHistoryOfAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceBank/GetHistoryOfAccountTokenFaultFault"
+                  name="TokenFaultFault" message="tns:IServiceBank_GetHistoryOfAccount_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IServiceBank" type="tns:IServiceBank">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IServiceBank/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccounts">
+      <soap:operation soapAction="http://tempuri.org/IServiceBank/GetAccounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="TokenFaultFault">
+        <soap:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PayIn">
+      <soap:operation soapAction="http://tempuri.org/IServiceBank/PayIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="TokenFaultFault">
+        <soap:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PayOut">
+      <soap:operation soapAction="http://tempuri.org/IServiceBank/PayOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="TokenFaultFault">
+        <soap:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Transfer">
+      <soap:operation soapAction="http://tempuri.org/IServiceBank/Transfer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="TokenFaultFault">
+        <soap:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetHistoryOfAccount">
+      <soap:operation soapAction="http://tempuri.org/IServiceBank/GetHistoryOfAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="TokenFaultFault">
+        <soap:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceBank">
+    <wsdl:port name="BasicHttpBinding_IServiceBank" binding="tns:BasicHttpBinding_IServiceBank">
+      <soap:address location="http://127.0.0.1:8080/serviceBank" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

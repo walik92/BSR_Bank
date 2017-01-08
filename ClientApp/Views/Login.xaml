@@ -1,0 +1,48 @@
+﻿<controls:MetroWindow x:Name="Window" x:Class="ClientApp.Views.Login"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      mc:Ignorable="d"
+                      xmlns:converters="clr-namespace:ClientApp.Helpers.Converters"
+                      xmlns:myControls="clr-namespace:ClientApp.MyControls"
+                      Title="SignIn" Width="480" Background="#f7f7f7" ShowIconOnTitleBar="True"
+
+                      BorderBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterScreen"
+                      MinHeight="300" BorderThickness="2" ResizeMode="CanMinimize" Icon="/ClientApp;component/icon.ico"
+                      VerticalAlignment="Top" SizeToContent="Height">
+    <controls:MetroWindow.WindowButtonCommands>
+        <controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+    </controls:MetroWindow.WindowButtonCommands>
+    <Grid>
+        <StackPanel Visibility="{Binding VisibilityForm}">
+            <iconPacks:PackIconFontAwesome Width="32" Margin="10"
+                                           Height="32"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Kind="SignIn" Foreground="{DynamicResource AccentColorBrush}" />
+
+            <Label Content="Sign in to your account!" HorizontalContentAlignment="Center"
+                   Margin="10,0,10,0" FontSize="16" Foreground="{DynamicResource AccentColorBrush}"
+                   FontFamily="Calibri" FontWeight="Bold" />
+            <myControls:MyErrorControl ErrorValue="{Binding Error}"
+                                       Visibility="{Binding Path=Error, TargetNullValue=Collapsed}" />
+
+            <Label Content="Id Client" Margin="10,0" FontSize="10" Padding="0,5,5,5" Foreground="#949494" />
+            <TextBox Height="25" Text="{Binding IdClient}" Margin="10,0,10,10" VerticalContentAlignment="Center"
+                     controls:TextBoxHelper.Watermark="Id Client" controls:TextBoxHelper.ClearTextButton="True" />
+            <Label Content="Password" Margin="10,0" FontSize="10" Padding="0,5,5,5" Foreground="#949494" />
+            <PasswordBox x:Name="PasswordBox" Height="25" Margin="10,0,10,10"
+                         VerticalContentAlignment="Center" controls:TextBoxHelper.Watermark="Password"
+                         controls:TextBoxHelper.ClearTextButton="True" />
+            <Button IsDefault="True" Content="SignIn" Height="40" Margin="10,10,10,20" Command="{Binding LoginCommand}"
+                    Style="{StaticResource MyButtonStyle}"
+                    BorderThickness="1" CommandParameter="{Binding ElementName=PasswordBox}" />
+        </StackPanel>
+
+        <myControls:MyProgressBar Visibility="{Binding VisibilityProgress}" VerticalAlignment="Center" />
+
+    </Grid>
+</controls:MetroWindow>

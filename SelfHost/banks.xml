@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<configuration>
+  <Banks>
+    <Bank>
+      <id>99999999</id>
+      <IP>localhost:8080</IP>
+    </Bank>
+  </Banks>
+</configuration>
