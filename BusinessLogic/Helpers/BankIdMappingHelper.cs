@@ -4,9 +4,9 @@ using System.Linq;
 using System.ServiceModel;
 using System.Xml.Linq;
 
-namespace BusinessLogic.Business.Account
+namespace BusinessLogic.Helpers
 {
-    public static class MappingOfBanks
+    public static class BankIdMappingHelper
     {
         private static readonly string _pathFileOfBanks = @"banks.xml";
 

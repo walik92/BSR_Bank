@@ -64,8 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\Account\AccountManager.cs" />
-    <Compile Include="Business\Account\MappingOfBanks.cs" />
-    <Compile Include="Business\Account\NumberAccountManager.cs" />
+    <Compile Include="Helpers\BankIdMappingHelper.cs" />
+    <Compile Include="Helpers\NumberAccountHelper.cs" />
     <Compile Include="Business\Credentials\CredentialsValidator.cs" />
     <Compile Include="Business\Credentials\Hash.cs" />
     <Compile Include="Business\Credentials\TokenManager.cs" />

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace BusinessLogic.Business.Account
+namespace BusinessLogic.Helpers
 {
-    public class NumberAccountManager
+    public class NumberAccountHelper
     {
-        private static readonly int _bankCode = 129725;
+        private static readonly int _mybankCode = 129725;
 
         public static byte CalculateChecksum(long id)
         {
-            var number = _bankCode.ToString().PadLeft(8, '0') + id.ToString().PadLeft(16, '0') + "252100";
+            var number = _mybankCode.ToString().PadLeft(8, '0') + id.ToString().PadLeft(16, '0') + "252100";
             if (string.IsNullOrEmpty(number))
                 throw new ArgumentException("The Id can't be empty.");
 
@@ -25,7 +25,7 @@ namespace BusinessLogic.Business.Account
 
         public static string GetFullNumberAccount(byte checksum, long id)
         {
-            var number = _bankCode.ToString().PadLeft(8, '0') + id.ToString().PadLeft(16, '0');
+            var number = _mybankCode.ToString().PadLeft(8, '0') + id.ToString().PadLeft(16, '0');
             var splitNumber = checksum.ToString().PadLeft(2, '0') + " " + string.Join(" ",
                                   Regex.Split(number, "(....)(....)(....)(....)(....)(....)")).Trim();
 
@@ -35,10 +35,11 @@ namespace BusinessLogic.Business.Account
 
         public static bool IsAccountInMyBank(string number)
         {
-            return ExtractIdBank(number) == _bankCode;
+            return ExtractIdBank(number) == _mybankCode;
         }
 
-        //pobiera identyfikator numeru konta w db
+
+        /// pobiera identyfikator numeru konta w db
         public static long GetNumberAccount(string number)
         {
             number = number.Replace(" ", null);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BusinessLogic.Business.Account;
 using BusinessLogic.Business.Credentials;
+using BusinessLogic.Helpers;
 using BusinessLogic.Interfaces.Admin;
 using RepozytoriumDB.DTO;
 using RepozytoriumDB.IRepository;
@@ -34,11 +34,11 @@ namespace BusinessLogic.Business.Admin
             var account = new RepozytoriumDB.DTO.Account();
             var idNextAccount = await GetNextIdAccount();
             account.Number = idNextAccount;
-            account.Checksum = NumberAccountManager.CalculateChecksum(idNextAccount);
+            account.Checksum = NumberAccountHelper.CalculateChecksum(idNextAccount);
             account.Client = await _accountRepository.ClientRepository.GetByIdAsync(clientId);
             _accountRepository.Add(account);
             await _accountRepository.SaveAsync();
-            return NumberAccountManager.GetFullNumberAccount(account.Checksum, account.Number);
+            return NumberAccountHelper.GetFullNumberAccount(account.Checksum, account.Number);
         }
 
         private int CreateId()

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BusinessLogic.Business.Account;
+using BusinessLogic.Helpers;
 using BusinessLogic.Interfaces.Operations;
 using RepozytoriumDB.DTO.Operations;
 using RepozytoriumDB.IRepository;
@@ -20,8 +20,8 @@ namespace BusinessLogic.Business.Operations
 
         public async Task Execute(IAccountRepository accountRepository)
         {
-            var checksum = NumberAccountManager.GetChecksum(_accountFrom);
-            var number = NumberAccountManager.GetNumberAccount(_accountFrom);
+            var checksum = NumberAccountHelper.GetChecksum(_accountFrom);
+            var number = NumberAccountHelper.GetNumberAccount(_accountFrom);
 
             var account = await accountRepository.GetAccountByNumberAsync(checksum, number);
 

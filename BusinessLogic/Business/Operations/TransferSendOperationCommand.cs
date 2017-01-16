@@ -6,8 +6,8 @@ using System.Net.Http.Headers;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessLogic.Business.Account;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Helpers;
 using BusinessLogic.Interfaces.Operations;
 using BusinessLogic.Model;
 using Newtonsoft.Json;
@@ -28,15 +28,15 @@ namespace BusinessLogic.Business.Operations
 
         public async Task Execute(IAccountRepository accountRepository)
         {
-            var checksum = NumberAccountManager.GetChecksum(_transferModel.AccountFrom);
-            var number = NumberAccountManager.GetNumberAccount(_transferModel.AccountFrom);
+            var checksum = NumberAccountHelper.GetChecksum(_transferModel.AccountFrom);
+            var number = NumberAccountHelper.GetNumberAccount(_transferModel.AccountFrom);
 
             var accountFrom = await accountRepository.GetAccountByNumberAsync(checksum, number);
 
             accountFrom.Balance -= _transferModel.GetAmount;
             await Save(accountRepository, accountFrom);
 
-            if (NumberAccountManager.IsAccountInMyBank(_transferModel.AccountTo))
+            if (NumberAccountHelper.IsAccountInMyBank(_transferModel.AccountTo))
             {
                 var transferReceiver = new TransferReceiveOperationCommand(_transferModel);
                 await transferReceiver.Execute(accountRepository);
@@ -55,15 +55,15 @@ namespace BusinessLogic.Business.Operations
             operation.Balance = account.Balance;
             operation.Account = account;
             operation.Date = DateTime.Now;
-            operation.Destination = NumberAccountManager.ClearNumber(_transferModel.AccountTo);
+            operation.Destination = NumberAccountHelper.ClearNumber(_transferModel.AccountTo);
             accountRepository.OperationRepository.Add(operation);
             await accountRepository.SaveAsync();
         }
 
         private async Task SendTransferToAnotherBank()
         {
-            var idBank = NumberAccountManager.ExtractIdBank(_transferModel.AccountTo);
-            var ip = MappingOfBanks.GetIP(idBank);
+            var idBank = NumberAccountHelper.ExtractIdBank(_transferModel.AccountTo);
+            var ip = BankIdMappingHelper.GetIP(idBank);
             var url = $"http://{ip}/transfer";
 
             var username = ConfigurationManager.AppSettings["User"];

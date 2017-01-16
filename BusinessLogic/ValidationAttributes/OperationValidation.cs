@@ -6,8 +6,8 @@ using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using System.Text.RegularExpressions;
-using BusinessLogic.Business.Account;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Helpers;
 using BusinessLogic.Model;
 using BusinessLogic.Model.Interfaces;
 using log4net;
@@ -77,7 +77,7 @@ namespace BusinessLogic.ValidationAttributes
                             ValidTransfer(transfer);
                             //validate without token
                             ValidAccountDb(transfer.AccountTo);
-                            if (!NumberAccountManager.IsAccountInMyBank(transfer.AccountTo))
+                            if (!NumberAccountHelper.IsAccountInMyBank(transfer.AccountTo))
                                 WebFaultThrower.Throw(
                                     $"The accountTo number '{transfer.AccountTo}' isn't from my bank.",
                                     HttpStatusCode.NotFound);
@@ -188,7 +188,7 @@ namespace BusinessLogic.ValidationAttributes
 
             ValidAmount(transferModel.GetAmount);
 
-            if (NumberAccountManager.EqualsNumbers(transferModel.AccountFrom, transferModel.AccountTo))
+            if (NumberAccountHelper.EqualsNumbers(transferModel.AccountFrom, transferModel.AccountTo))
                 throw new FaultException("Account From is the same as Account To");
             if (string.IsNullOrEmpty(transferModel.Title) || string.IsNullOrWhiteSpace(transferModel.Title))
                 throw new FaultException("The Title can't be empty");
@@ -232,8 +232,8 @@ namespace BusinessLogic.ValidationAttributes
 
         private Account GetAccountByNumber(string numberAccount)
         {
-            var number = NumberAccountManager.GetNumberAccount(numberAccount);
-            var checksum = NumberAccountManager.GetChecksum(numberAccount);
+            var number = NumberAccountHelper.GetNumberAccount(numberAccount);
+            var checksum = NumberAccountHelper.GetChecksum(numberAccount);
 
             var account = _accountRepository.GetAccountByNumber(checksum, number);
             if (account == null)

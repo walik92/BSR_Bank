@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using BusinessLogic.Helpers;
 using BusinessLogic.Interfaces.Account;
 using BusinessLogic.Interfaces.Operations;
 using BusinessLogic.Model;
@@ -29,7 +30,7 @@ namespace BusinessLogic.Business.Account
             foreach (var account in accountsDb)
             {
                 var accountModel = new AccountModel();
-                accountModel.Number = NumberAccountManager.GetFullNumberAccount(account.Checksum, account.Number);
+                accountModel.Number = NumberAccountHelper.GetFullNumberAccount(account.Checksum, account.Number);
                 accountModel.Balance = (double) account.Balance;
                 accounts.Add(accountModel);
             }
@@ -60,8 +61,8 @@ namespace BusinessLogic.Business.Account
         public async Task<HistoryOfAccountModel> GetHistoryOfAccount(string token, string account, int currentPage,
             int sizePage)
         {
-            var checksum = NumberAccountManager.GetChecksum(account);
-            var number = NumberAccountManager.GetNumberAccount(account);
+            var checksum = NumberAccountHelper.GetChecksum(account);
+            var number = NumberAccountHelper.GetNumberAccount(account);
 
             var operationsDb = await _accountRepository.OperationRepository.GetOperationsAsync(checksum, number,
                 currentPage,
@@ -82,13 +83,13 @@ namespace BusinessLogic.Business.Account
                 {
                     operationModel.Title = (operation as TransferReceiveOperation).Title;
                     operationModel.Details =
-                        $"Source account: {NumberAccountManager.FormatNumber((operation as TransferReceiveOperation).Source)}";
+                        $"Source account: {NumberAccountHelper.FormatNumber((operation as TransferReceiveOperation).Source)}";
                 }
                 if (operation is TransferSendOperation)
                 {
                     operationModel.Title = (operation as TransferSendOperation).Title;
                     operationModel.Details =
-                        $"Destination account: {NumberAccountManager.FormatNumber((operation as TransferSendOperation).Destination)}";
+                        $"Destination account: {NumberAccountHelper.FormatNumber((operation as TransferSendOperation).Destination)}";
                 }
                 if (operation is PayOutOperation)
                     operationModel.Details = (operation as PayOutOperation).Name;
