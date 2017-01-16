@@ -3,7 +3,7 @@ using System.ServiceModel;
 using System.Threading.Tasks;
 using BusinessLogic.Exceptions;
 using BusinessLogic.Model;
-using BusinessLogic.Validators;
+using BusinessLogic.ValidationAttributes;
 
 namespace SelfHost.Services.Interfaces
 {

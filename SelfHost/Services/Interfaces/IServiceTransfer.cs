@@ -2,7 +2,7 @@
 using System.ServiceModel.Web;
 using System.Threading.Tasks;
 using BusinessLogic.Model;
-using BusinessLogic.Validators;
+using BusinessLogic.ValidationAttributes;
 
 namespace SelfHost.Services.Interfaces
 {
@@ -10,7 +10,7 @@ namespace SelfHost.Services.Interfaces
     [ServiceContract]
     public interface IServiceTransfer
     {
-        [BasicAuthenticateValidation]
+        [BasicAuthorizationValidation]
         [OperationContract]
         [OperationValidation]
         [WebInvoke(Method = "POST", UriTemplate = "/transfer", ResponseFormat = WebMessageFormat.Json)]

@@ -18,9 +18,6 @@ namespace BusinessLogic.Model
         [DataMember(Name = "title")]
         public string Title { get; set; }
 
-        public decimal GetAmount
-        {
-            get { return (decimal) Amount / 100; }
-        }
+        public decimal GetAmount => (decimal) Amount / 100;
     }
 }

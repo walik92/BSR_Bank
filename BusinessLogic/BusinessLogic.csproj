@@ -93,13 +93,10 @@
     <Compile Include="Model\TransferSoapModel.cs" />
     <Compile Include="Model\TransferRestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\CredentialValidation.cs" />
-    <Compile Include="Validators\ParameterInspectors\ValidateCredential.cs" />
-    <Compile Include="Validators\BasicAuthorizationValidation.cs" />
-    <Compile Include="Validators\TokenValidation.cs" />
-    <Compile Include="Validators\OperationValidation.cs" />
-    <Compile Include="Validators\ParameterInspectors\ValidateToken.cs" />
-    <Compile Include="Validators\ParameterInspectors\ValidateOperation.cs" />
+    <Compile Include="ValidationAttributes\CredentialValidation.cs" />
+    <Compile Include="ValidationAttributes\BasicAuthorizationValidation.cs" />
+    <Compile Include="ValidationAttributes\TokenValidation.cs" />
+    <Compile Include="ValidationAttributes\OperationValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RepozytoriumDB\RepozytoriumDB.csproj">

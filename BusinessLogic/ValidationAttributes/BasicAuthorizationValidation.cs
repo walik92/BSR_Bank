@@ -10,7 +10,7 @@ using System.Text;
 using BusinessLogic.Exceptions;
 using log4net;
 
-namespace BusinessLogic.Validators
+namespace BusinessLogic.ValidationAttributes
 {
     public class BasicAuthorizationValidation : Attribute, IOperationBehavior, IParameterInspector
     {
@@ -70,7 +70,6 @@ namespace BusinessLogic.Validators
 
         public void AfterCall(string operationName, object[] outputs, object returnValue, object correlationState)
         {
-            throw new NotImplementedException();
         }
     }
 }

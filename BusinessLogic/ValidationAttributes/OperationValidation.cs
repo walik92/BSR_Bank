@@ -2,6 +2,8 @@
 using System.Net;
 using System.Reflection;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using System.Text.RegularExpressions;
 using BusinessLogic.Business.Account;
@@ -14,26 +16,29 @@ using RepozytoriumDB.DTO;
 using RepozytoriumDB.IRepository;
 using RepozytoriumDB.Repository;
 
-namespace BusinessLogic.Validators.ParameterInspectors
+namespace BusinessLogic.ValidationAttributes
 {
-    public class ValidateOperation : IParameterInspector
+    public class OperationValidation : Attribute, IOperationBehavior, IParameterInspector
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private IAccountRepository _accountRepository;
-        private int _index;
 
-        public ValidateOperation()
-            : this(0)
+        public void AddBindingParameters(OperationDescription operationDescription,
+            BindingParameterCollection bindingParameters)
         {
         }
 
-        public ValidateOperation(int index)
+        public void ApplyClientBehavior(OperationDescription operationDescription, ClientOperation clientOperation)
         {
-            _index = index;
+            clientOperation.ParameterInspectors.Add(this);
         }
 
+        public void ApplyDispatchBehavior(OperationDescription operationDescription, DispatchOperation dispatchOperation)
+        {
+            dispatchOperation.ParameterInspectors.Add(this);
+        }
 
-        public void AfterCall(string operationName, object[] outputs, object returnValue, object correlationState)
+        public void Validate(OperationDescription operationDescription)
         {
         }
 
@@ -153,6 +158,10 @@ namespace BusinessLogic.Validators.ParameterInspectors
                     break;
             }
             return null;
+        }
+
+        public void AfterCall(string operationName, object[] outputs, object returnValue, object correlationState)
+        {
         }
 
         private void ValidateNumberAccount(string number)

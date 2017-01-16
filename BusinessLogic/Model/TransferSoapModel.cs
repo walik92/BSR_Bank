@@ -26,9 +26,6 @@ namespace BusinessLogic.Model
         public string Title { get; set; }
 
         [JsonIgnore]
-        public decimal GetAmount
-        {
-            get { return (decimal) Amount / 100; }
-        }
+        public decimal GetAmount => (decimal) Amount / 100;
     }
 }
