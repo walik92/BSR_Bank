@@ -67,7 +67,7 @@ namespace SelfHost
 
         private static void StartHostServiceTransfer(string address, IContainer container)
         {
-            var uri = new Uri($"{address}/transfer");
+            var uri = new Uri($"{address}");
             _serviceTransferHost = new WebServiceHost(typeof(ServiceTransfer), uri);
             _serviceTransferHost.AddDependencyInjectionBehavior<IServiceTransfer>(container);
 
@@ -107,6 +107,6 @@ namespace SelfHost
             return
                 !string.IsNullOrEmpty(port) &&
                 int.TryParse(port, out result);
-        }    
+        }
     }
 }

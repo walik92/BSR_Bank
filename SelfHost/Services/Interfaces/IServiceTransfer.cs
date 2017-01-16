@@ -13,7 +13,7 @@ namespace SelfHost.Services.Interfaces
         [BasicAuthenticateValidation]
         [OperationContract]
         [OperationValidation]
-        [WebInvoke(Method = "POST", UriTemplate = "/", ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", UriTemplate = "/transfer", ResponseFormat = WebMessageFormat.Json)]
         Task TransferReceive(TransferRestModel transferRestModel);
     }
 }

@@ -69,6 +69,12 @@ namespace BusinessLogic.Business.Operations
             var username = ConfigurationManager.AppSettings["User"];
             var password = ConfigurationManager.AppSettings["Password"];
 
+            //        HttpClientHandler httpClientHandler = new HttpClientHandler()
+            //        {
+            ////            Proxy = new WebProxy(string.Format("127.0.0.1:{1}", proxyServerSettings.Address,
+            ////proxyServerSettings.Port), false),
+            //            //UseProxy = true
+            //        };
 
             using (var client = new HttpClient())
             {
