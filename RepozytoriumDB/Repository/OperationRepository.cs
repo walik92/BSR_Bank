@@ -18,7 +18,7 @@ namespace RepozytoriumDB.Repository
             _bankDbContext = bankDbContext;
         }
 
-        public async Task<IEnumerable<Operation>> GetOperationsAsync(byte checksum, long number, int currentPage,
+        public async Task<IEnumerable<BaseOperation>> GetOperationsAsync(byte checksum, long number, int currentPage,
             int sizePage)
         {
             return
@@ -29,7 +29,7 @@ namespace RepozytoriumDB.Repository
                     .ToListAsync();
         }
 
-        public void Add(Operation operation)
+        public void Add(BaseOperation operation)
         {
             _bankDbContext.Operations.Add(operation);
         }

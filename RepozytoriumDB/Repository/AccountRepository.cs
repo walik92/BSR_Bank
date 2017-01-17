@@ -84,10 +84,15 @@ namespace RepozytoriumDB.Repository
             return new EntityDatabaseTransaction(_bankDbContext);
         }
 
-        public async Task<IEnumerable<Account>> GetAccountsAsync(string token)
+        public async Task<IEnumerable<Account>> GetAccountsByTokenAsync(string token)
         {
             var client = await ClientRepository.GetByTokenAsync(token);
             return client.Accounts;
+        }
+
+        public async Task<IEnumerable<Account>> GetAccountsAll()
+        {
+            return _bankDbContext.Accounts.Include("Client");
         }
 
         protected virtual void Dispose(bool disposing)

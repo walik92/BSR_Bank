@@ -30,7 +30,7 @@ namespace BusinessLogic.Business.Operations
             await Save(accountRepository, account);
         }
 
-        public async Task Save(IAccountRepository accountRepository, RepozytoriumDB.DTO.Account account)
+        private async Task Save(IAccountRepository accountRepository, RepozytoriumDB.DTO.Account account)
         {
             var operation = new PayInOperation();
             operation.Amount = (decimal) _amount / 100;

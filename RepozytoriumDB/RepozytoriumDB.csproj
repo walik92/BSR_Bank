@@ -52,7 +52,9 @@
   <ItemGroup>
     <Compile Include="BankDbContext.cs" />
     <Compile Include="DTO\Account.cs" />
-    <Compile Include="DTO\Operations\Operation.cs" />
+    <Compile Include="DTO\Operations\BankChargeOperation.cs" />
+    <Compile Include="DTO\Operations\BaseOperation.cs" />
+    <Compile Include="DTO\Operations\NameTableAttribute.cs" />
     <Compile Include="DTO\Operations\PayInOperation.cs" />
     <Compile Include="DTO\Operations\PayOutOperation.cs" />
     <Compile Include="DTO\Operations\TransferSendOperation.cs" />

@@ -25,7 +25,7 @@ namespace BusinessLogic.Business.Account
         public async Task<IEnumerable<AccountModel>> GetAccounts(string token)
         {
             var accountsDb =
-                await _accountRepository.GetAccountsAsync(token);
+                await _accountRepository.GetAccountsByTokenAsync(token);
             var accounts = new List<AccountModel>();
             foreach (var account in accountsDb)
             {
@@ -68,7 +68,7 @@ namespace BusinessLogic.Business.Account
                 currentPage,
                 sizePage);
 
-            var enumerable = operationsDb as IList<Operation> ?? operationsDb.ToList();
+            var enumerable = operationsDb as IList<BaseOperation> ?? operationsDb.ToList();
             if (operationsDb == null || !enumerable.Any())
                 throw new FaultException("Account hasn't any operations.");
 
@@ -95,6 +95,8 @@ namespace BusinessLogic.Business.Account
                     operationModel.Details = (operation as PayOutOperation).Name;
                 if (operation is PayInOperation)
                     operationModel.Details = (operation as PayInOperation).Name;
+                if (operation is BankChargeOperation)
+                    operationModel.Details = (operation as BankChargeOperation).Name;
 
                 operations.Add(operationModel);
             }

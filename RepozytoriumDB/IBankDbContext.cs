@@ -12,7 +12,7 @@ namespace RepozytoriumDB
         DbSet<Client> Clients { get; set; }
         DbSet<Token> Tokens { get; set; }
         DbSet<Account> Accounts { get; set; }
-        DbSet<Operation> Operations { get; set; }
+        DbSet<BaseOperation> Operations { get; set; }
         Database Database { get; }
         int SaveChanges();
         Task<int> SaveChangesAsync();

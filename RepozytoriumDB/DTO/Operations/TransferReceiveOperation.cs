@@ -2,7 +2,7 @@
 
 namespace RepozytoriumDB.DTO.Operations
 {
-    public class TransferReceiveOperation : Operation
+    public class TransferReceiveOperation : BaseOperation
     {
         [Required]
         [MaxLength(200)]

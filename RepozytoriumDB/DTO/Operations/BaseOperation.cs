@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RepozytoriumDB.DTO.Operations
 {
-    public abstract class Operation
+    [Table("Operations")]
+    public abstract class BaseOperation
     {
         [Key]
         public int Id { get; set; }

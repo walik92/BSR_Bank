@@ -28,7 +28,7 @@ namespace BusinessLogic.Business.Operations
             await Save(accountRepository, accountTo);
         }
 
-        public async Task Save(IAccountRepository accountRepository, RepozytoriumDB.DTO.Account account)
+        private async Task Save(IAccountRepository accountRepository, RepozytoriumDB.DTO.Account account)
         {
             var operation = new TransferReceiveOperation();
             operation.Title = _transferModel.Title;

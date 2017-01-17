@@ -2,12 +2,12 @@
 
 namespace RepozytoriumDB.DTO.Operations
 {
-    public class PayOutOperation : BaseOperation
+    public class BankChargeOperation : BaseOperation
     {
         [NotMapped]
         public string Name
         {
-            get { return "PayOut"; }
+            get { return "BankCharge"; }
         }
     }
 }

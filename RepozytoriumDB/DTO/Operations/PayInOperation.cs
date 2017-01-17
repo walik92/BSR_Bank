@@ -2,7 +2,7 @@
 
 namespace RepozytoriumDB.DTO.Operations
 {
-    public class PayInOperation : Operation
+    public class PayInOperation : BaseOperation
     {
         [NotMapped]
         public string Name

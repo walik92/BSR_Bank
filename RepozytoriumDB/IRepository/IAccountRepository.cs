@@ -14,7 +14,8 @@ namespace RepozytoriumDB.IRepository
         Task<Account> GetAccountByNumberAsync(byte checksum, long number);
         Account GetAccountByNumber(byte checksum, long number);
         Task SaveAsync();
-        Task<IEnumerable<Account>> GetAccountsAsync(string token);
+        Task<IEnumerable<Account>> GetAccountsByTokenAsync(string token);
+        Task<IEnumerable<Account>> GetAccountsAll();
         IDatabaseTransaction BeginTransaction();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BusinessLogic.Business.Credentials;
+using BusinessLogic.Business.Operations;
 using BusinessLogic.Helpers;
 using BusinessLogic.Interfaces.Admin;
 using RepozytoriumDB.DTO;
@@ -39,6 +40,23 @@ namespace BusinessLogic.Business.Admin
             _accountRepository.Add(account);
             await _accountRepository.SaveAsync();
             return NumberAccountHelper.GetFullNumberAccount(account.Checksum, account.Number);
+        }
+
+        public async Task AddBankCharges(BankChargeOperationCommand operation)
+        {
+            using (var transaction = _accountRepository.BeginTransaction())
+            {
+                try
+                {
+                    await operation.Execute(_accountRepository);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
         }
 
         private int CreateId()

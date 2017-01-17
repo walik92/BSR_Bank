@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BusinessLogic.Business.Operations;
 
 namespace BusinessLogic.Interfaces.Admin
 {
@@ -6,5 +7,6 @@ namespace BusinessLogic.Interfaces.Admin
     {
         Task<int> AddClient(string password);
         Task<string> AddAccount(int clientId);
+        Task AddBankCharges(BankChargeOperationCommand operation);
     }
 }
