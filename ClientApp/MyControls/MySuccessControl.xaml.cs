@@ -17,7 +17,6 @@ namespace ClientApp.MyControls
             InitializeComponent();
         }
 
-
         public string SuccessValue
         {
             get { return GetValue(SuccessTextProperty).ToString(); }

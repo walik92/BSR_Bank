@@ -8,6 +8,9 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Operations
 {
+    /// <summary>
+    ///     Operacja Transfer odbieranie
+    /// </summary>
     public class TransferReceiveOperationCommand : IOperationCommand
     {
         private readonly ITransferModel _transferModel;
@@ -22,7 +25,7 @@ namespace BusinessLogic.Business.Operations
             var checksum = NumberAccountHelper.GetChecksum(_transferModel.AccountTo);
             var number = NumberAccountHelper.GetNumberAccount(_transferModel.AccountTo);
 
-            var accountTo = await accountRepository.GetAccountByNumberAsync(checksum, number);
+            var accountTo = await accountRepository.GetAccountByNumberAndCheckSumAsync(checksum, number);
 
             accountTo.Balance += _transferModel.GetAmount;
             await Save(accountRepository, accountTo);

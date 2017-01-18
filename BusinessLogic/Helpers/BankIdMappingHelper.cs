@@ -6,10 +6,18 @@ using System.Xml.Linq;
 
 namespace BusinessLogic.Helpers
 {
+    /// <summary>
+    ///     Mapowanie identyfiaktora banku na jego adres IP
+    /// </summary>
     public static class BankIdMappingHelper
     {
         private static readonly string _pathFileOfBanks = @"banks.xml";
 
+        /// <summary>
+        ///     Pobierz adres IP banku
+        /// </summary>
+        /// <param name="id">Identyfikator banku</param>
+        /// <returns>Adres IP</returns>
         public static string GetIP(int id)
         {
             var banks = ReadConfigFile();

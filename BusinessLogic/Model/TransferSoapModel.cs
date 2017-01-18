@@ -4,10 +4,12 @@ using Newtonsoft.Json;
 
 namespace BusinessLogic.Model
 {
+    /// <summary>
+    ///     Model: Transfer(wykorzystywany do operacji w usłudze SOAP)
+    /// </summary>
     [DataContract(Name = "Transfer")]
     public class TransferSoapModel : ITransferModel
     {
-        //json property określa nazwę właściwości w JSONie podczas wysyłania transferu do innego banku
         [DataMember]
         [JsonProperty("sender_account")]
         public string AccountFrom { get; set; }
@@ -19,7 +21,6 @@ namespace BusinessLogic.Model
         [DataMember(IsRequired = true)]
         [JsonProperty("amount")]
         public int Amount { get; set; }
-
 
         [DataMember]
         [JsonProperty("title")]

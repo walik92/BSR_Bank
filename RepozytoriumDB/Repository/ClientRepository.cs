@@ -39,15 +39,15 @@ namespace RepozytoriumDB.Repository
             await _bankDbContext.SaveChangesAsync();
         }
 
+        public void Add(Client client)
+        {
+            _bankDbContext.Clients.Add(client);
+        }
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public void Add(Client client)
-        {
-            _bankDbContext.Clients.Add(client);
         }
 
         protected virtual void Dispose(bool disposing)

@@ -40,12 +40,10 @@ namespace RepozytoriumDB.Repository
             }
         }
 
-
         public void Add(Account account)
         {
             _bankDbContext.Accounts.Add(account);
         }
-
 
         public async Task<long> GetLastIdAccountAsync()
         {
@@ -54,14 +52,14 @@ namespace RepozytoriumDB.Repository
             return lastNumber;
         }
 
-        public async Task<Account> GetAccountByNumberAsync(byte checksum, long number)
+        public async Task<Account> GetAccountByNumberAndCheckSumAsync(byte checksum, long number)
         {
             return
                 await _bankDbContext.Accounts.Include("Client")
                     .FirstOrDefaultAsync(q => q.Number == number && q.Checksum == checksum);
         }
 
-        public Account GetAccountByNumber(byte checksum, long number)
+        public Account GetAccountByNumberAndCheckSum(byte checksum, long number)
         {
             return
                 _bankDbContext.Accounts.Include("Client")
@@ -71,12 +69,6 @@ namespace RepozytoriumDB.Repository
         public async Task SaveAsync()
         {
             await _bankDbContext.SaveChangesAsync();
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         public IDatabaseTransaction BeginTransaction()
@@ -92,7 +84,13 @@ namespace RepozytoriumDB.Repository
 
         public async Task<IEnumerable<Account>> GetAccountsAll()
         {
-            return _bankDbContext.Accounts.Include("Client");
+            return await _bankDbContext.Accounts.Include("Client").ToListAsync();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)

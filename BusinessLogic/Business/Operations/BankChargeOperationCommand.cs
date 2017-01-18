@@ -6,6 +6,9 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Operations
 {
+    /// <summary>
+    ///     Operacja Opłata bankowa
+    /// </summary>
     public class BankChargeOperationCommand : IOperationCommand
     {
         private readonly int _amount;

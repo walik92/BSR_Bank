@@ -3,6 +3,10 @@ using BusinessLogic.Model.Interfaces;
 
 namespace BusinessLogic.Model
 {
+    /// <summary>
+    ///     Model: Transfer(wykorzystywany do operacji w usłudze REST)
+    ///     osobny model dla usługi REST aby nazwy pól były zgodne z konwencja underscores
+    /// </summary>
     [DataContract(Name = "Transfer")]
     public class TransferRestModel : ITransferModel
     {

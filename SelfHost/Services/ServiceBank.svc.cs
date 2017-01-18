@@ -17,21 +17,19 @@ namespace SelfHost.Services
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IAccountManager _accountManager;
-        private readonly ITokenManager _tokenManager;
+        private readonly ITokenBuilder _tokenBuilder;
 
-
-        public ServiceBank(ITokenManager tokenManager, IAccountManager accountManager)
+        public ServiceBank(ITokenBuilder tokenBuilder, IAccountManager accountManager)
         {
-            _tokenManager = tokenManager;
+            _tokenBuilder = tokenBuilder;
             _accountManager = accountManager;
         }
-
 
         public async Task<TokenModel> Login(CredentialModel credential)
         {
             try
             {
-                return await _tokenManager.Build(credential);
+                return await _tokenBuilder.Build(credential);
             }
             catch (FaultException ex)
             {

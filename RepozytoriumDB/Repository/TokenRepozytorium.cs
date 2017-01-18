@@ -28,12 +28,12 @@ namespace RepozytoriumDB.Repository
             }
         }
 
-        public async Task<Token> GetByTokenAsync(string token)
+        public async Task<Token> GetByValueTokenAsync(string token)
         {
             return await _bankDbContext.Tokens.FirstOrDefaultAsync(q => q.Value == token);
         }
 
-        public Token GetByToken(string token)
+        public Token GetByValueToken(string token)
         {
             return _bankDbContext.Tokens.FirstOrDefault(q => q.Value == token);
         }

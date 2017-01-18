@@ -20,7 +20,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _accountTo = value;
-                NotifyPropertyChanged("AccountTo");
+                NotifyPropertyChanged();
             }
         }
 
@@ -30,7 +30,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _title = value;
-                NotifyPropertyChanged("Title");
+                NotifyPropertyChanged();
             }
         }
 

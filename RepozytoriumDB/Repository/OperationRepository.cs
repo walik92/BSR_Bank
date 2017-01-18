@@ -18,7 +18,8 @@ namespace RepozytoriumDB.Repository
             _bankDbContext = bankDbContext;
         }
 
-        public async Task<IEnumerable<BaseOperation>> GetOperationsAsync(byte checksum, long number, int currentPage,
+        public async Task<IEnumerable<BaseOperation>> GetOperationsOfAccountAsync(byte checksum, long number,
+            int currentPage,
             int sizePage)
         {
             return
@@ -46,7 +47,6 @@ namespace RepozytoriumDB.Repository
         {
             await _bankDbContext.SaveChangesAsync();
         }
-
 
         public void Dispose()
         {

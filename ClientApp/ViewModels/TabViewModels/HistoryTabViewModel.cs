@@ -25,7 +25,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _isEnabledPreviousButton = value;
-                NotifyPropertyChanged("IsEnabledPreviousButton");
+                NotifyPropertyChanged();
             }
         }
 
@@ -35,7 +35,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _isEnabledNextButton = value;
-                NotifyPropertyChanged("IsEnabledNextButton");
+                NotifyPropertyChanged();
             }
         }
 
@@ -45,7 +45,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _currentPage = value;
-                NotifyPropertyChanged("CurrentPage");
+                NotifyPropertyChanged();
                 if (_currentPage > 1)
                     IsEnabledPreviousButton = true;
                 else
@@ -61,7 +61,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _countAllOfPages = value;
-                NotifyPropertyChanged("CountAllOfPages");
+                NotifyPropertyChanged();
                 if (CurrentPage >= CountAllOfPages)
                     IsEnabledNextButton = false;
                 else
@@ -82,7 +82,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _selectedAccount = value;
-                NotifyPropertyChanged("SelectedAccount");
+                NotifyPropertyChanged();
                 CurrentPage = 1;
                 WorkerAsync(GetHistoryOfAccount);
             }
@@ -94,7 +94,7 @@ namespace ClientApp.ViewModels.TabViewModels
             set
             {
                 _historyOfAccount = value;
-                NotifyPropertyChanged("HistoryOfAccount");
+                NotifyPropertyChanged();
             }
         }
 
@@ -119,7 +119,6 @@ namespace ClientApp.ViewModels.TabViewModels
                 CurrentPage--;
             else
                 CurrentPage++;
-
 
             await WorkerAsync(GetHistoryOfAccount);
         }

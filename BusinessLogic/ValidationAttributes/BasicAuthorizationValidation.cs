@@ -12,6 +12,9 @@ using log4net;
 
 namespace BusinessLogic.ValidationAttributes
 {
+    /// <summary>
+    ///     Atrybut: Walidacja basic authoriation REST service
+    /// </summary>
     public class BasicAuthorizationValidation : Attribute, IOperationBehavior, IParameterInspector
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);

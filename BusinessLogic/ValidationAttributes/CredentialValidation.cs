@@ -7,6 +7,9 @@ using BusinessLogic.Model;
 
 namespace BusinessLogic.ValidationAttributes
 {
+    /// <summary>
+    ///     Atrybut: Walidacja uwierzytelnanie użytkownika
+    /// </summary>
     public class CredentialValidation : Attribute, IOperationBehavior, IParameterInspector
     {
         public void AddBindingParameters(OperationDescription operationDescription,
@@ -37,7 +40,6 @@ namespace BusinessLogic.ValidationAttributes
                 throw new FaultException("The Id Client can't be empty.");
             if (string.IsNullOrEmpty(credential.Password))
                 throw new FaultException("The Password can't be empty.");
-
 
             return null;
         }

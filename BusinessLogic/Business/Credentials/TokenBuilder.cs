@@ -8,7 +8,10 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Credentials
 {
-    public class TokenManager : ITokenManager
+    /// <summary>
+    ///     Budowanie tokenu
+    /// </summary>
+    public class TokenBuilder : ITokenBuilder
     {
         private readonly ICredentialsValidator _credentialsValidator;
         private readonly ITokenRepository _tokenRepository;
@@ -16,14 +19,13 @@ namespace BusinessLogic.Business.Credentials
         private readonly int _tokenSize = 128;
         private readonly ITokenValidator _tokenValidator;
 
-        public TokenManager(ITokenRepository tokenRepository, ICredentialsValidator credentialsValidator,
+        public TokenBuilder(ITokenRepository tokenRepository, ICredentialsValidator credentialsValidator,
             ITokenValidator tokenValidator)
         {
             _tokenRepository = tokenRepository;
             _credentialsValidator = credentialsValidator;
             _tokenValidator = tokenValidator;
         }
-
 
         public async Task<TokenModel> Build(CredentialModel creds)
         {
@@ -47,7 +49,6 @@ namespace BusinessLogic.Business.Credentials
 
             return token;
         }
-
 
         private string BuildSecureToken()
         {

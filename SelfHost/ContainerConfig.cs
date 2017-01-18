@@ -13,8 +13,15 @@ using SelfHost.Services.Interfaces;
 
 namespace SelfHost
 {
+    /// <summary>
+    ///     Konfiguracja kontenera IoC
+    /// </summary>
     public static class ContainerConfig
     {
+        /// <summary>
+        ///     Pobierz skonfigurowany Kontener IoC
+        /// </summary>
+        /// <returns>Kontener IoC</returns>
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
@@ -26,11 +33,10 @@ namespace SelfHost
             builder.RegisterType<AccountRepository>().As<IAccountRepository>().InstancePerLifetimeScope();
             builder.RegisterType<OperationRepository>().As<IOperationRepository>().InstancePerLifetimeScope();
 
-
             //token           
             builder.RegisterType<TokenValidator>().As<ITokenValidator>().InstancePerLifetimeScope();
             builder.RegisterType<CredentialsValidator>().As<ICredentialsValidator>().InstancePerLifetimeScope();
-            builder.RegisterType<TokenManager>().As<ITokenManager>().InstancePerLifetimeScope();
+            builder.RegisterType<TokenBuilder>().As<ITokenBuilder>().InstancePerLifetimeScope();
 
             //client
             builder.RegisterType<AdminManager>().As<IAdminManager>().InstancePerLifetimeScope();
@@ -39,8 +45,6 @@ namespace SelfHost
             builder.RegisterType<AccountManager>().As<IAccountManager>().InstancePerLifetimeScope();
 
             //services
-
-
             builder.RegisterType<ServiceBank>().As<IServiceBank>();
             builder.RegisterType<ServiceTransfer>().As<IServiceTransfer>();
             builder.RegisterType<ServiceAdmin>().As<IServiceAdmin>();

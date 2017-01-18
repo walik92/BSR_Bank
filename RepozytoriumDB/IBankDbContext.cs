@@ -7,6 +7,10 @@ using RepozytoriumDB.DTO.Operations;
 
 namespace RepozytoriumDB
 {
+    /// <summary>
+    ///     Entity Framework Database Context
+    ///     Odpowiada za komunikację z bazą danych
+    /// </summary>
     public interface IBankDbContext : IDisposable
     {
         DbSet<Client> Clients { get; set; }

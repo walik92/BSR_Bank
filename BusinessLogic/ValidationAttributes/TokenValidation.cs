@@ -10,6 +10,9 @@ using RepozytoriumDB.Repository;
 
 namespace BusinessLogic.ValidationAttributes
 {
+    /// <summary>
+    ///     Atrybut: Walidacja Tokenu
+    /// </summary>
     public class TokenValidation : Attribute, IOperationBehavior, IParameterInspector
     {
         public void AddBindingParameters(OperationDescription operationDescription,
@@ -41,13 +44,11 @@ namespace BusinessLogic.ValidationAttributes
             if (string.IsNullOrEmpty(token) || string.IsNullOrWhiteSpace(token))
                 throw new FaultException("Token can't be empty");
 
-
             if (!tokenValidator.IsValid(token))
             {
                 var fault = new TokenFault {Message = "Invalid or expired token", Token = token};
                 throw new FaultException<TokenFault>(fault, "Token Fault");
             }
-
 
             return null;
         }

@@ -5,6 +5,9 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Credentials
 {
+    /// <summary>
+    ///     Walidacja tokenu
+    /// </summary>
     public class TokenValidator : ITokenValidator
     {
         private readonly int _defaultTokenTimeToLive = 300;
@@ -20,7 +23,7 @@ namespace BusinessLogic.Business.Credentials
 
         public bool IsValid(string token)
         {
-            var tokenDto = _tokenRepository.GetByToken(token);
+            var tokenDto = _tokenRepository.GetByValueToken(token);
 
             return tokenDto != null && !IsExpired(tokenDto.CreateDate);
         }

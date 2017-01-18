@@ -54,7 +54,6 @@
     <Compile Include="DTO\Account.cs" />
     <Compile Include="DTO\Operations\BankChargeOperation.cs" />
     <Compile Include="DTO\Operations\BaseOperation.cs" />
-    <Compile Include="DTO\Operations\NameTableAttribute.cs" />
     <Compile Include="DTO\Operations\PayInOperation.cs" />
     <Compile Include="DTO\Operations\PayOutOperation.cs" />
     <Compile Include="DTO\Operations\TransferSendOperation.cs" />
@@ -78,9 +77,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Database\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

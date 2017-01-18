@@ -34,7 +34,6 @@ namespace ClientApp.ViewModels.TabViewModels.Base
             }
         }
 
-
         public ICommand ConfrimCommand
         {
             get { return _confirmCommand ?? (_confirmCommand = new CommandHandlerAsync(Action)); }

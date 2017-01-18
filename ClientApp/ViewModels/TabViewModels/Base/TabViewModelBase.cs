@@ -29,7 +29,6 @@ namespace ClientApp.ViewModels.TabViewModels.Base
             }
         }
 
-
         public IEnumerable<Account> Accounts
         {
             get { return _accounts; }
@@ -49,7 +48,6 @@ namespace ClientApp.ViewModels.TabViewModels.Base
                 NotifyPropertyChanged("Success");
             }
         }
-
 
         private async Task GetAccounts()
         {

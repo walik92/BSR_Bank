@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BusinessLogic.Business.Credentials;
 using BusinessLogic.Business.Operations;
 using BusinessLogic.Helpers;
 using BusinessLogic.Interfaces.Admin;
@@ -9,6 +8,12 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Admin
 {
+    /// <summary>
+    ///     Operacje wykonywane przez administratora systemu
+    ///     - Dodaj klienta
+    ///     - Dodaj konto
+    ///     - Dodaj opłaty bankowe
+    /// </summary>
     public class AdminManager : IAdminManager
     {
         private readonly IAccountRepository _accountRepository;
@@ -24,7 +29,7 @@ namespace BusinessLogic.Business.Admin
             var client = new Client();
             var id = CreateId();
             client.Id = id;
-            client.Password = Hash.GetHash(password);
+            client.Password = HashHelper.GetHash(password);
             _accountRepository.ClientRepository.Add(client);
             await _accountRepository.SaveAsync();
             return id;

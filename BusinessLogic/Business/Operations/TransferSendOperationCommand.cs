@@ -16,6 +16,9 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Operations
 {
+    /// <summary>
+    ///     Operacja Transfer Wysyłanie
+    /// </summary>
     public class TransferSendOperationCommand : IOperationCommand
     {
         private readonly TransferSoapModel _transferModel;
@@ -25,15 +28,21 @@ namespace BusinessLogic.Business.Operations
             _transferModel = transferSoapModel;
         }
 
-
         public async Task Execute(IAccountRepository accountRepository)
         {
             var checksum = NumberAccountHelper.GetChecksum(_transferModel.AccountFrom);
             var number = NumberAccountHelper.GetNumberAccount(_transferModel.AccountFrom);
 
-            var accountFrom = await accountRepository.GetAccountByNumberAsync(checksum, number);
+            var accountFrom = await accountRepository.GetAccountByNumberAndCheckSumAsync(checksum, number);
 
             accountFrom.Balance -= _transferModel.GetAmount;
+
+            /*
+             * przed wysłaniem transferu do innego banku zapisanie stanu konta
+             * (operaja może się nie udać, wówczas transfer do innego banku nie zostanie zrealizowany)
+             * w przypadku wystąpienia problemów w innym banku operacja zostanie wycofana przez transakcję
+             */
+
             await Save(accountRepository, accountFrom);
 
             if (NumberAccountHelper.IsAccountInMyBank(_transferModel.AccountTo))
@@ -60,6 +69,10 @@ namespace BusinessLogic.Business.Operations
             await accountRepository.SaveAsync();
         }
 
+        /// <summary>
+        ///     Wysyłanie transferu do innego banku
+        /// </summary>
+        /// <returns></returns>
         private async Task SendTransferToAnotherBank()
         {
             var idBank = NumberAccountHelper.ExtractIdBank(_transferModel.AccountTo);
@@ -68,13 +81,6 @@ namespace BusinessLogic.Business.Operations
 
             var username = ConfigurationManager.AppSettings["User"];
             var password = ConfigurationManager.AppSettings["Password"];
-
-            //        HttpClientHandler httpClientHandler = new HttpClientHandler()
-            //        {
-            ////            Proxy = new WebProxy(string.Format("127.0.0.1:{1}", proxyServerSettings.Address,
-            ////proxyServerSettings.Port), false),
-            //            //UseProxy = true
-            //        };
 
             using (var client = new HttpClient())
             {

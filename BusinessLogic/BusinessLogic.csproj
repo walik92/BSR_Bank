@@ -68,8 +68,8 @@
     <Compile Include="Helpers\BankIdMappingHelper.cs" />
     <Compile Include="Helpers\NumberAccountHelper.cs" />
     <Compile Include="Business\Credentials\CredentialsValidator.cs" />
-    <Compile Include="Business\Credentials\Hash.cs" />
-    <Compile Include="Business\Credentials\TokenManager.cs" />
+    <Compile Include="Helpers\HashHelper.cs" />
+    <Compile Include="Business\Credentials\TokenBuilder.cs" />
     <Compile Include="Business\Credentials\TokenValidator.cs" />
     <Compile Include="Business\Operations\PayInOperationCommand.cs" />
     <Compile Include="Business\Operations\PayOutOperationCommand.cs" />
@@ -83,7 +83,7 @@
     <Compile Include="Business\Admin\AdminManager.cs" />
     <Compile Include="Interfaces\Account\IAccountManager.cs" />
     <Compile Include="Interfaces\Credentials\ICredentialsValidator.cs" />
-    <Compile Include="Interfaces\Credentials\ITokenManager.cs" />
+    <Compile Include="Interfaces\Credentials\ITokenBuilder.cs" />
     <Compile Include="Interfaces\Credentials\ITokenValidator.cs" />
     <Compile Include="Interfaces\Admin\IAdminManager.cs" />
     <Compile Include="Model\CredentialModel.cs" />

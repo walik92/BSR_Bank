@@ -9,7 +9,6 @@ namespace ClientApp.ViewModels
 {
     public class MainViewModel : ModelBase
     {
-        private readonly DispatcherTimer _dt;
         private readonly Stopwatch _stopWatch;
         private readonly int _tokenTimeToLive;
         private TabViewModelBase _accountsTabViewModel;
@@ -22,16 +21,15 @@ namespace ClientApp.ViewModels
         public MainViewModel()
         {
             _tokenTimeToLive = ServiceBankExecutor.GetTokenTtl();
-            _dt = new DispatcherTimer();
+            var dt = new DispatcherTimer();
             _stopWatch = new Stopwatch();
 
-            _dt.Tick += dt_Tick;
-            _dt.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            dt.Tick += dt_Tick;
+            dt.Interval = new TimeSpan(0, 0, 0, 0, 10);
 
             _stopWatch.Start();
-            _dt.Start();
+            dt.Start();
         }
-
 
         public string RemainingTimeSession
         {
@@ -44,7 +42,7 @@ namespace ClientApp.ViewModels
             set
             {
                 _remainingTimeSession = value;
-                NotifyPropertyChanged("RemainingTimeSession");
+                NotifyPropertyChanged();
             }
         }
 
@@ -90,7 +88,6 @@ namespace ClientApp.ViewModels
                        (_historryTabViewModel = new HistoryTabViewModel {CloseAction = CloseAction});
             }
         }
-
 
         private void dt_Tick(object sender, EventArgs e)
         {

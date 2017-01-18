@@ -7,6 +7,9 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Operations
 {
+    /// <summary>
+    ///     Operacja Wypłata bankowa
+    /// </summary>
     public class PayOutOperationCommand : IOperationCommand
     {
         private readonly string _accountFrom;
@@ -23,7 +26,7 @@ namespace BusinessLogic.Business.Operations
             var checksum = NumberAccountHelper.GetChecksum(_accountFrom);
             var number = NumberAccountHelper.GetNumberAccount(_accountFrom);
 
-            var account = await accountRepository.GetAccountByNumberAsync(checksum, number);
+            var account = await accountRepository.GetAccountByNumberAndCheckSumAsync(checksum, number);
 
             var value = (decimal) _amount / 100;
             account.Balance -= value;

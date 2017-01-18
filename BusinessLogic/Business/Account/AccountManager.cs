@@ -12,10 +12,15 @@ using RepozytoriumDB.IRepository;
 
 namespace BusinessLogic.Business.Account
 {
+    /// <summary>
+    ///     Operacje wykonywane na obiekcie Account
+    ///     - pobierz konta uwierzytelninego użytkownika
+    ///     - wykonaj operację
+    ///     - pobierz historie operacji konta
+    /// </summary>
     public class AccountManager : IAccountManager
     {
         private readonly IAccountRepository _accountRepository;
-
 
         public AccountManager(IAccountRepository accountRepository)
         {
@@ -34,7 +39,6 @@ namespace BusinessLogic.Business.Account
                 accountModel.Balance = (double) account.Balance;
                 accounts.Add(accountModel);
             }
-
 
             if (accounts == null || !accounts.Any())
                 throw new FaultException("User hasn't any accounts.");
@@ -64,7 +68,7 @@ namespace BusinessLogic.Business.Account
             var checksum = NumberAccountHelper.GetChecksum(account);
             var number = NumberAccountHelper.GetNumberAccount(account);
 
-            var operationsDb = await _accountRepository.OperationRepository.GetOperationsAsync(checksum, number,
+            var operationsDb = await _accountRepository.OperationRepository.GetOperationsOfAccountAsync(checksum, number,
                 currentPage,
                 sizePage);
 
@@ -81,13 +85,13 @@ namespace BusinessLogic.Business.Account
                 operationModel.Date = operation.Date;
                 if (operation is TransferReceiveOperation)
                 {
-                    operationModel.Title = (operation as TransferReceiveOperation).Title;
+                    operationModel.Name = (operation as TransferReceiveOperation).Title;
                     operationModel.Details =
                         $"Source account: {NumberAccountHelper.FormatNumber((operation as TransferReceiveOperation).Source)}";
                 }
                 if (operation is TransferSendOperation)
                 {
-                    operationModel.Title = (operation as TransferSendOperation).Title;
+                    operationModel.Name = (operation as TransferSendOperation).Title;
                     operationModel.Details =
                         $"Destination account: {NumberAccountHelper.FormatNumber((operation as TransferSendOperation).Destination)}";
                 }
@@ -100,7 +104,6 @@ namespace BusinessLogic.Business.Account
 
                 operations.Add(operationModel);
             }
-
 
             var result = new HistoryOfAccountModel();
             result.Operations = operations;

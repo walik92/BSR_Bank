@@ -15,7 +15,6 @@ namespace ClientApp.ViewModels
 
         public string IdClient { get; set; }
 
-
         public ICommand LoginCommand
         {
             get { return _loginCommand ?? (_loginCommand = new CommandHandlerAsync(LoginAction)); }

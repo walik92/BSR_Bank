@@ -18,6 +18,9 @@ using RepozytoriumDB.Repository;
 
 namespace BusinessLogic.ValidationAttributes
 {
+    /// <summary>
+    ///     Atrybut: Walidacja Operacji bankowych
+    /// </summary>
     public class OperationValidation : Attribute, IOperationBehavior, IParameterInspector
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -196,14 +199,19 @@ namespace BusinessLogic.ValidationAttributes
                 throw new FaultException("The Title length should be less than 200");
         }
 
-
-        public void ValidAmount(decimal amount)
+        private void ValidAmount(decimal amount)
         {
             if (amount <= 0)
                 throw new FaultException("The amount of transfer should be greater than zero.");
         }
 
-        //sprawdza czy istnieje konto o podanym numerze i czy nalezy do zalogowanego użytkownika i czy stan konta pozwala na wykoanie operacji
+        /// <summary>
+        ///     Sprawdza czy istnieje konto o podanym numerze i czy nalezy do zalogowanego użytkownika i czy stan konta pozwala na
+        ///     wykoanie operacji
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="numberAccount"></param>
+        /// <param name="amount"></param>
         private void ValidAccountDb(string token, string numberAccount, decimal amount)
         {
             var account = ValidAccountDb(token, numberAccount);
@@ -212,7 +220,12 @@ namespace BusinessLogic.ValidationAttributes
                 throw new FaultException($"The account {numberAccount} haven't enough money.");
         }
 
-        //sprawdza czy istnieje konto o podanym numerze i czy nalezy do zalogowanego użytkownika
+        /// <summary>
+        ///     Sprawdza czy istnieje konto o podanym numerze i czy nalezy do zalogowanego użytkownika
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="numberAccount"></param>
+        /// <returns></returns>
         private Account ValidAccountDb(string token, string numberAccount)
         {
             var client = _accountRepository.ClientRepository.GetByToken(token);
@@ -224,7 +237,11 @@ namespace BusinessLogic.ValidationAttributes
             return account;
         }
 
-        //sprawdza czy w bazie istnieje konto o podanym numerze
+        /// <summary>
+        ///     Sprawdza czy w bazie istnieje konto o podanym numerze
+        /// </summary>
+        /// <param name="numberAccount"></param>
+        /// <returns></returns>
         private Account ValidAccountDb(string numberAccount)
         {
             return GetAccountByNumber(numberAccount);
@@ -235,7 +252,7 @@ namespace BusinessLogic.ValidationAttributes
             var number = NumberAccountHelper.GetNumberAccount(numberAccount);
             var checksum = NumberAccountHelper.GetChecksum(numberAccount);
 
-            var account = _accountRepository.GetAccountByNumber(checksum, number);
+            var account = _accountRepository.GetAccountByNumberAndCheckSum(checksum, number);
             if (account == null)
                 throw new FaultException($"Sorry, The account number {numberAccount} doesn't exist in my bank");
             return account;
